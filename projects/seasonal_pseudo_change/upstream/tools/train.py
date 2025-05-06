@@ -60,7 +60,6 @@ def parse_args():
         help='job launcher')
     parser.add_argument('--local_rank', '--local-rank', type=int, default=0)
     args = parser.parse_args()
-    args.config = r"E:\paper\mmaction2\projects\seasonal_pseudo_change\configs\downstream_videoswin\swin_tiny_2class.py"
     if 'LOCAL_RANK' not in os.environ:
         os.environ['LOCAL_RANK'] = str(args.local_rank)
 

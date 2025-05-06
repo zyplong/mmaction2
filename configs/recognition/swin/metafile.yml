@@ -1,4 +1,4 @@
-Collections:
+  Collections:
   - Name: Swin
     README: configs/recognition/swin/README.md
     Paper:
