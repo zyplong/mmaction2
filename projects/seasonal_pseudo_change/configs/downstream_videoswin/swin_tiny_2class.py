@@ -45,7 +45,7 @@ ann_file_test = ann_file_val
 file_client_args = dict(io_backend='disk')
 train_pipeline = [
     dict(type='RawFrameDecode'),
-    dict(type='SampleFrames', clip_len=8, frame_interval=1, num_clips=1),
+    dict(type='SampleFrames', clip_len=8, frame_interval=2, num_clips=1),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='RandomResizedCrop'),
     dict(type='Resize', scale=(224, 224), keep_ratio=False),
@@ -71,7 +71,7 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=4,
+    batch_size=1,
     num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
@@ -81,7 +81,7 @@ train_dataloader = dict(
         data_prefix=dict(img=data_root),
         pipeline=train_pipeline))
 val_dataloader = dict(
-    batch_size=4,
+    batch_size=1,
     num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),

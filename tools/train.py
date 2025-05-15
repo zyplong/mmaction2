@@ -7,7 +7,7 @@ from mmengine.config import Config, DictAction
 from mmengine.runner import Runner
 
 from mmaction.registry import RUNNERS
-
+#E:\\paper\\mmaction2\\projects\\seasonal_pseudo_change\\configs\\downstream_videoswin\\swin_tiny_2class.py
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a action recognizer')
