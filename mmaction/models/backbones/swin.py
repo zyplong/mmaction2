@@ -915,6 +915,7 @@ class SwinTransformer3D(BaseModule):
         Args:
             logger (MMLogger): The logger used to print debugging information.
         """
+        # Q
         checkpoint = _load_checkpoint(self.pretrained, map_location='cpu')
         state_dict = checkpoint['model']
 

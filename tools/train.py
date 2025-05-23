@@ -1,4 +1,5 @@
 # Copyright (c) OpenMMLab. All rights reserved.
+
 import argparse
 import os
 import os.path as osp
@@ -7,8 +8,8 @@ from mmengine.config import Config, DictAction
 from mmengine.runner import Runner
 
 from mmaction.registry import RUNNERS
-#E:\\paper\\mmaction2\\projects\\seasonal_pseudo_change\\configs\\downstream_videoswin\\swin_tiny_2class.py
-
+#F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\configs\downstream_videoswin\swin_tiny_raw.py
+#F:\\zyp\\Thesis source code\\mmaction2\\projects\\seasonal_pseudo_change\\configs\downstream_videoswin\\swin_tiny_pt.py
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a action recognizer')
     parser.add_argument('config', help='train config file path')
@@ -60,7 +61,7 @@ def parse_args():
         help='job launcher')
     parser.add_argument('--local_rank', '--local-rank', type=int, default=0)
     args = parser.parse_args()
-    args.config = r"E:\paper\mmaction2\projects\seasonal_pseudo_change\configs\downstream_videoswin\swin_tiny_2class.py"
+
     if 'LOCAL_RANK' not in os.environ:
         os.environ['LOCAL_RANK'] = str(args.local_rank)
 
