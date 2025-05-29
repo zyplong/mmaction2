@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6d435b5d-f18d-4df7-95cd-5ab94f1019f8" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/configs/_base_/models/swin_tiny.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs/_base_/models/swin_tiny.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/recognition/swin/metafile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/recognition/swin/metafile.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2wORjWe4f4LD1j4RGIunIM8MNEq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.auto_label_mapbiomas.executor": "Run",
+    "Python.ces.executor": "Run",
+    "Python.make_split.executor": "Run",
+    "Python.swin_tiny_2class.executor": "Run",
+    "Python.tif2jpg_batch.executor": "Run",
+    "Python.train.executor": "Run",
+    "Python.将 .tif 转换为 .jpg.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "E:/paper/mmaction2/projects/seasonal_pseudo_change/upstream/tools"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\paper\mmaction2\projects\seasonal_pseudo_change\upstream\tools" />
+      <recent name="E:\paper\mmaction2\projects\seasonal_pseudo_change\configs\downstream_videoswin" />
+      <recent name="E:\paper\mmaction2\projects\seasonal_pseudo_change\downstream\configs" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-975db3bf15a3-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18034.82" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="6d435b5d-f18d-4df7-95cd-5ab94f1019f8" name="更改" comment="" />
+      <created>1745910791700</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1745910791700</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

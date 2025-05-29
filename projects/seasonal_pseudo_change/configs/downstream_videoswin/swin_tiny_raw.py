@@ -42,7 +42,7 @@ model = dict(
 )
 
 # 训练设置
-train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=10, val_begin=1, val_interval=1)
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=50, val_begin=1, val_interval=1)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 
@@ -135,4 +135,4 @@ visualizer = dict(
 log_level = 'INFO'
 load_from = None
 resume = False
-work_dir = './work_dirs/swin_tiny_2class'
+work_dir = 'F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\work_dirs'
