@@ -91,19 +91,32 @@
 # print("\n🎉 转换完成！请检查 datasets/rawframes/patch_xxx/ 目录下是否有 20 张 jpg")
 
 
-import rasterio
-import cv2
-import numpy as np
-from pathlib import Path
+# import rasterio
+# import cv2
+# import numpy as np
+# from pathlib import Path
+#
+# input_tif = r"F:\zyp\数据文件夹\patch_308_summer.tif"
+# output_jpg = r"F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\datasets\rawframes\patch_308\img_0002.jpg"
+#
+# with rasterio.open(input_tif) as src:
+#     img = src.read([1, 2, 3])  # 读取 B4, B3, B2 波段 → RGB
+#     img = np.transpose(img, (1, 2, 0))  # (C, H, W) → (H, W, C)
+#     img = np.clip(img, 0, 3000) / 3000.0 * 255  # 线性拉伸到 0–255
+#     img = img.astype(np.uint8)
+#
+# Path(output_jpg).parent.mkdir(parents=True, exist_ok=True)
+# cv2.imwrite(output_jpg, img)
 
-input_tif = r"F:\zyp\数据文件夹\patch_308_summer.tif"
-output_jpg = r"F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\datasets\rawframes\patch_308\img_0002.jpg"
+import torch
 
-with rasterio.open(input_tif) as src:
-    img = src.read([1, 2, 3])  # 读取 B4, B3, B2 波段 → RGB
-    img = np.transpose(img, (1, 2, 0))  # (C, H, W) → (H, W, C)
-    img = np.clip(img, 0, 3000) / 3000.0 * 255  # 线性拉伸到 0–255
-    img = img.astype(np.uint8)
+src_pth = r'F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\pretrained\videoswin\swin_tiny_patch244_window877_kinetics400_1k_converted.pth'
+dst_pth = r'F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\pretrained\videoswin\swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth'
 
-Path(output_jpg).parent.mkdir(parents=True, exist_ok=True)
-cv2.imwrite(output_jpg, img)
+ckpt = torch.load(src_pth, map_location='cpu')
+if 'model' in ckpt:
+    state_dict = ckpt['model']
+else:
+    state_dict = ckpt
+torch.save(state_dict, dst_pth)
+print('Converted and saved:', dst_pth)

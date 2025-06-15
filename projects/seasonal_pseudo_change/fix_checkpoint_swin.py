@@ -1,8 +1,4 @@
-
-
 # fix_checkpoint_swin.py
-
-# 1) 最顶端，加补丁
 from mmaction.models.backbones.swin import PatchEmbed3D
 _PatchEmbed3D_forward = PatchEmbed3D.forward
 def _patched_forward(self, x):
@@ -24,6 +20,34 @@ import pandas as pd
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from mmaction.apis import init_recognizer
+
+# ============ 日志与归档功能 ============
+import logging
+from datetime import datetime
+from torch.utils.tensorboard import SummaryWriter
+import shutil
+
+def setup_logger(log_dir, log_name="training.log"):
+    os.makedirs(log_dir, exist_ok=True)
+    log_path = os.path.join(log_dir, log_name)
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    fh = logging.FileHandler(log_path, encoding='utf-8')
+    fh.setFormatter(formatter)
+    logger.handlers.clear()
+    logger.addHandler(fh)
+    sh = logging.StreamHandler()
+    sh.setFormatter(formatter)
+    logger.addHandler(sh)
+    return logger
+
+def save_config(cfg_path, save_dir, params):
+    os.makedirs(save_dir, exist_ok=True)
+    shutil.copy(cfg_path, os.path.join(save_dir, "config.py"))
+    with open(os.path.join(save_dir, "run_params.txt"), "w", encoding="utf-8") as f:
+        for k, v in params.items():
+            f.write(f"{k}: {v}\n")
 
 def load_cfg_py(cfg_path):
     spec = importlib.util.spec_from_file_location("cfg", cfg_path)
@@ -48,7 +72,6 @@ def extract_semi_params(cfg):
     params['epochs'] = cfg.train_cfg.get('max_epochs', 30)
     params['save_dir'] = cfg.work_dir if hasattr(cfg, 'work_dir') else 'work_dirs/teacher_student'
     params['ema_decay'] = 0.99
-    # 支持 val_csv
     params['val_csv'] = getattr(cfg, 'ann_file_val', params['train_csv'].replace('train', 'val'))
     return params
 
@@ -61,24 +84,15 @@ def get_transform():
 
 class LabeledDataset(torch.utils.data.Dataset):
     def __init__(self, file_path, rawframes_dir, clip_len=8, transform=None):
-        # 自动适配 txt/csv 分隔符
         self.df = pd.read_csv(file_path, sep=None, engine='python', header=None, names=['patch_id', 'frame_num', 'label'])
-
-        # 1. 去掉表头
         self.df = self.df[self.df['label'] != 'label']
-        # 2. 去掉空字符串
         self.df = self.df[self.df['label'].astype(str).str.strip() != '']
-        # 3. 去掉 NaN
         self.df = self.df[~self.df['label'].isnull()]
-        # 4. 仅保留能转成 int 的
         self.df = self.df[self.df['label'].apply(lambda x: str(x).isdigit())]
-        # 5. 去重
         self.df = self.df.drop_duplicates(subset=['patch_id', 'label'])
-
         self.rawframes_dir = rawframes_dir
         self.clip_len = clip_len
         self.transform = transform
-
         if len(self.df) == 0:
             raise ValueError(f"没有可用的有效数据，请检查 {file_path}")
 
@@ -141,7 +155,6 @@ def update_teacher(student, teacher, ema_decay=0.99):
         t.data = ema_decay * t.data + (1 - ema_decay) * s.data
 
 def fix_x_shape(x, params):
-    # 确保 x 是 (B,3,T,H,W)
     if x.ndim == 5 and x.shape[1] == 3:
         return x
     if x.ndim == 4 and x.shape[0] == params['bs'] * 3:
@@ -163,7 +176,6 @@ def evaluate_on_val(model, val_loader, device):
         x = x.to(device)
         y = y.to(device)
         logits = model(x, return_loss=False)
-        # logits 适配池化
         if isinstance(logits, (tuple, list)):
             logits = logits[0]
         if hasattr(logits, "logits"):
@@ -181,17 +193,42 @@ def evaluate_on_val(model, val_loader, device):
     acc = correct / total if total > 0 else 0
     return acc, avg_loss
 
+@torch.no_grad()
+def evaluate_on_train(model, train_loader, device):
+    model.eval()
+    total, correct = 0, 0
+    for x, y in train_loader:
+        x = x.to(device)
+        y = y.to(device)
+        logits = model(x, return_loss=False)
+        if isinstance(logits, (tuple, list)):
+            logits = logits[0]
+        if hasattr(logits, "logits"):
+            logits = logits.logits
+        if logits.dim() == 5:
+            logits = logits.mean(dim=[2, 3, 4])
+        elif logits.dim() == 4:
+            logits = logits.mean(dim=[2, 3])
+        preds = logits.argmax(dim=1)
+        correct += (preds == y).sum().item()
+        total += x.size(0)
+    acc = correct / total if total > 0 else 0
+    return acc
+
 def train_teacher_student(params):
     import copy
     from mmaction.apis import init_recognizer
 
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    os.makedirs(params['save_dir'], exist_ok=True)
+    # ===== 日志、可视化、快照 =====
+    logger = setup_logger(params['save_dir'])
+    save_config(params['config'], params['save_dir'], params)
+    writer = SummaryWriter(log_dir=os.path.join(params['save_dir'], 'vis_data'))
 
-    student = init_recognizer(
-        params['config'], params['checkpoint'], device=device)
-    teacher = init_recognizer(
-        params['config'], params['checkpoint'], device=device)
+    logger.info("Experiment started. Params: %s", str(params))
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    student = init_recognizer(params['config'], params['checkpoint'], device=device)
+    teacher = init_recognizer(params['config'], params['checkpoint'], device=device)
     teacher.eval()
     for p in teacher.parameters():
         p.requires_grad = False
@@ -218,27 +255,26 @@ def train_teacher_student(params):
         batch_size=params['bs'] * params['unlab_mult'],
         shuffle=True, num_workers=4, drop_last=True)
 
-    # === 新增：验证集与日志 ===
     val_csv = params.get('val_csv') or params['train_csv'].replace('train', 'val')
     val_ds = LabeledDataset(val_csv, params['rawframes_dir'], params['clip_len'], transform=get_transform())
     val_loader = DataLoader(val_ds, batch_size=params['bs'], shuffle=False, num_workers=4, drop_last=False)
+
+    # 日志文件头
     log_path = os.path.join(params['save_dir'], 'training_log.txt')
     with open(log_path, 'w', encoding='utf-8') as logf:
-        logf.write('Epoch\tTrainLoss\tSupLoss\tConsisLoss\tValAcc\tValLoss\tLR\n')
+        logf.write('Epoch\tTrainLoss\tSupLoss\tConsisLoss\tTrainAcc\tValAcc\tValLoss\tLR\n')
 
-    # === 训练主循环 ===
+    best_val_acc = 0.0
+
     for epoch in range(1, params['epochs'] + 1):
         student.train()
         unlabeled_iter = iter(unlabeled_loader)
-        # 记录loss
         running_loss, running_sup, running_consis = 0, 0, 0
         batches = 0
 
         for x_l, y_l in labeled_loader:
             x_l = fix_x_shape(x_l, params).to(device)
             y_l = y_l.to(device)
-
-            # 每次都拿一个无标签batch
             try:
                 x_u = next(unlabeled_iter)
             except StopIteration:
@@ -246,14 +282,12 @@ def train_teacher_student(params):
                 x_u = next(unlabeled_iter)
             x_u = fix_x_shape(x_u, params).to(device)
 
-            # 有监督loss
             sup_loss = student(x_l, y_l, return_loss=True)
             if isinstance(sup_loss, dict):
                 sup_loss = sup_loss['loss_cls']
             if hasattr(sup_loss, "dim") and sup_loss.dim() > 0:
                 sup_loss = sup_loss.mean()
 
-            # 一致性loss
             with torch.no_grad():
                 t_logits_u = teacher(x_u, return_loss=False)
             s_logits_u = student(x_u, return_loss=False)
@@ -277,36 +311,55 @@ def train_teacher_student(params):
         avg_sup  = running_sup / batches
         avg_consis = running_consis / batches
 
-        # === 验证集评估 ===
+        train_acc = evaluate_on_train(teacher, labeled_loader, device)
         val_acc, val_loss = evaluate_on_val(teacher, val_loader, device)
-        print(
-            f"[Epoch {epoch}] TrainLoss: {avg_loss:.4f} | "
-            f"SupLoss: {avg_sup:.4f} | ConsisLoss: {avg_consis:.4f} | "
-            f"ValAcc: {val_acc:.4f} | ValLoss: {val_loss:.4f} | "
-            f"LR: {optimizer.param_groups[0]['lr']:.2e}"
-        )
+
+        # 日志、可视化、文件同步
+        logger.info(f"[Epoch {epoch}] TrainLoss: {avg_loss:.4f} | SupLoss: {avg_sup:.4f} | "
+                    f"ConsisLoss: {avg_consis:.4f} | TrainAcc: {train_acc:.4f} | "
+                    f"ValAcc: {val_acc:.4f} | ValLoss: {val_loss:.4f} | LR: {optimizer.param_groups[0]['lr']:.2e}")
+
         with open(log_path, 'a', encoding='utf-8') as logf:
             logf.write(f"{epoch}\t{avg_loss:.4f}\t{avg_sup:.4f}\t"
-                       f"{avg_consis:.4f}\t{val_acc:.4f}\t{val_loss:.4f}\t"
+                       f"{avg_consis:.4f}\t{train_acc:.4f}\t"
+                       f"{val_acc:.4f}\t{val_loss:.4f}\t"
                        f"{optimizer.param_groups[0]['lr']:.2e}\n")
+        writer.add_scalar('Train/Loss', avg_loss, epoch)
+        writer.add_scalar('Train/SupLoss', avg_sup, epoch)
+        writer.add_scalar('Train/ConsisLoss', avg_consis, epoch)
+        writer.add_scalar('Eval/TrainAcc', train_acc, epoch)
+        writer.add_scalar('Eval/ValAcc', val_acc, epoch)
+        writer.add_scalar('Eval/ValLoss', val_loss, epoch)
+        writer.add_scalar('LR', optimizer.param_groups[0]['lr'], epoch)
 
+        # 权重保存（分阶段+best）
         if epoch % 10 == 0:
-            torch.save(
-                student.state_dict(),
-                os.path.join(params['save_dir'], f'student_epoch_{epoch}.pth'))
-            torch.save(
-                teacher.state_dict(),
-                os.path.join(params['save_dir'], f'teacher_epoch_{epoch}.pth'))
+            torch.save(student.state_dict(), os.path.join(params['save_dir'], f'student_epoch_{epoch}.pth'))
+            torch.save(teacher.state_dict(), os.path.join(params['save_dir'], f'teacher_epoch_{epoch}.pth'))
+        if val_acc > best_val_acc:
+            best_val_acc = val_acc
+            torch.save(teacher.state_dict(), os.path.join(params['save_dir'], f'best_teacher_epoch_{epoch}.pth'))
+            logger.info(f"*** New best model saved at epoch {epoch}, ValAcc={val_acc:.4f} ***")
 
-    torch.save(
-        teacher.state_dict(),
-        os.path.join(params['save_dir'], 'teacher_final.pth'))
-    print(f"Best teacher model saved to {os.path.join(params['save_dir'], 'teacher_final.pth')}")
+    writer.close()
+    torch.save(teacher.state_dict(), os.path.join(params['save_dir'], 'teacher_final.pth'))
+    logger.info(f"Best teacher model saved to {os.path.join(params['save_dir'], 'teacher_final.pth')}")
+    logger.info("Experiment finished.")
+
 
 if __name__ == '__main__':
     assert len(sys.argv) == 2, "用法: python fix_checkpoint_swin.py configs/downstream_videoswin/xxx.py"
     cfg_path = sys.argv[1]
     cfg = load_cfg_py(cfg_path)
     params = extract_semi_params(cfg)
-    print('Train params:', params)
+
+    # 自动生成带时间戳的保存目录
+    from datetime import datetime
+
+    cfg_base = os.path.splitext(os.path.basename(cfg_path))[0]
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    base_dir = params['save_dir'] if 'save_dir' in params else 'work_dirs/teacher_student'
+    new_dir = os.path.join(base_dir, f"{cfg_base}_{timestamp}")
+    params['save_dir'] = new_dir
+
     train_teacher_student(params)
