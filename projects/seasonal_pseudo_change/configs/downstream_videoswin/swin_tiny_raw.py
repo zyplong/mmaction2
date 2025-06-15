@@ -5,6 +5,7 @@ _base_ = ['../../configs/_base_/default_runtime.py']
 ann_file_train = 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/train.txt'
 ann_file_val = 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/val.txt'
 data_root = 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes'
+ann_file_unlabeled = 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/unlabeled.txt'
 data_prefix = dict(img=data_root)
 
 # 模型配置（加载预训练权重）
@@ -42,7 +43,7 @@ model = dict(
 )
 
 # 训练设置
-train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=50, val_begin=1, val_interval=1)
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=1, val_begin=1, val_interval=1)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 
@@ -97,6 +98,30 @@ val_dataloader = dict(
 # 如果 test 和 val 一模一样，就直接复用
 test_dataloader = val_dataloader
 
+# 半监督无标签数据加载
+unlabeled_dataloader = dict(
+    batch_size=4,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(type='DefaultSampler', shuffle=True),
+    dataset=dict(
+        type='RawframeDataset',
+        ann_file=ann_file_unlabeled,
+        data_prefix=data_prefix,    # 推荐统一成dict(img=data_root)
+        filename_tmpl='img_{:04d}.jpg',
+        pipeline=[
+            dict(type='SampleFrames', clip_len=8, frame_interval=1, num_clips=1),
+            dict(type='RawFrameDecode'),
+            dict(type='Resize', scale=(-1, 256)),
+            dict(type='RandomResizedCrop'),
+            dict(type='Resize', scale=(224, 224), keep_ratio=False),
+            dict(type='Flip', flip_ratio=0.5),
+            dict(type='FormatShape', input_format='NCTHW'),
+            dict(type='PackActionInputs')
+        ]
+    )
+)
+
 # 评估指标
 val_evaluator = dict(type='AccMetric')
 test_evaluator = val_evaluator
@@ -136,3 +161,4 @@ log_level = 'INFO'
 load_from = None
 resume = False
 work_dir = 'F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\work_dirs'
+
