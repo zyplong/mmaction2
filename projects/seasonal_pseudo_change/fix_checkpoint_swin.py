@@ -1,3 +1,5 @@
+
+
 # fix_checkpoint_swin.py
 
 # 1) 最顶端，加补丁
@@ -46,6 +48,8 @@ def extract_semi_params(cfg):
     params['epochs'] = cfg.train_cfg.get('max_epochs', 30)
     params['save_dir'] = cfg.work_dir if hasattr(cfg, 'work_dir') else 'work_dirs/teacher_student'
     params['ema_decay'] = 0.99
+    # 支持 val_csv
+    params['val_csv'] = getattr(cfg, 'ann_file_val', params['train_csv'].replace('train', 'val'))
     return params
 
 def get_transform():
@@ -56,14 +60,27 @@ def get_transform():
     ])
 
 class LabeledDataset(torch.utils.data.Dataset):
-    def __init__(self, csv_file, rawframes_dir, clip_len=8, transform=None):
-        self.df = pd.read_csv(csv_file, header=None, names=['patch_id', 'frame_num', 'label'])
-        # 过滤掉 'label' 行（表头）
+    def __init__(self, file_path, rawframes_dir, clip_len=8, transform=None):
+        # 自动适配 txt/csv 分隔符
+        self.df = pd.read_csv(file_path, sep=None, engine='python', header=None, names=['patch_id', 'frame_num', 'label'])
+
+        # 1. 去掉表头
         self.df = self.df[self.df['label'] != 'label']
+        # 2. 去掉空字符串
+        self.df = self.df[self.df['label'].astype(str).str.strip() != '']
+        # 3. 去掉 NaN
+        self.df = self.df[~self.df['label'].isnull()]
+        # 4. 仅保留能转成 int 的
+        self.df = self.df[self.df['label'].apply(lambda x: str(x).isdigit())]
+        # 5. 去重
+        self.df = self.df.drop_duplicates(subset=['patch_id', 'label'])
+
         self.rawframes_dir = rawframes_dir
         self.clip_len = clip_len
         self.transform = transform
-        self.df = self.df.drop_duplicates(subset=['patch_id', 'label'])
+
+        if len(self.df) == 0:
+            raise ValueError(f"没有可用的有效数据，请检查 {file_path}")
 
     def __len__(self):
         return len(self.df)
@@ -137,6 +154,33 @@ def fix_x_shape(x, params):
         return x.permute(0, 2, 1, 3, 4)
     raise ValueError(f"x shape not recognized: {x.shape}")
 
+@torch.no_grad()
+def evaluate_on_val(model, val_loader, device):
+    model.eval()
+    total, correct, total_loss = 0, 0, 0.0
+    criterion = nn.CrossEntropyLoss()
+    for x, y in val_loader:
+        x = x.to(device)
+        y = y.to(device)
+        logits = model(x, return_loss=False)
+        # logits 适配池化
+        if isinstance(logits, (tuple, list)):
+            logits = logits[0]
+        if hasattr(logits, "logits"):
+            logits = logits.logits
+        if logits.dim() == 5:
+            logits = logits.mean(dim=[2, 3, 4])
+        elif logits.dim() == 4:
+            logits = logits.mean(dim=[2, 3])
+        loss = criterion(logits, y)
+        total_loss += loss.item() * x.size(0)
+        preds = logits.argmax(dim=1)
+        correct += (preds == y).sum().item()
+        total += x.size(0)
+    avg_loss = total_loss / total if total > 0 else 0
+    acc = correct / total if total > 0 else 0
+    return acc, avg_loss
+
 def train_teacher_student(params):
     import copy
     from mmaction.apis import init_recognizer
@@ -174,9 +218,21 @@ def train_teacher_student(params):
         batch_size=params['bs'] * params['unlab_mult'],
         shuffle=True, num_workers=4, drop_last=True)
 
+    # === 新增：验证集与日志 ===
+    val_csv = params.get('val_csv') or params['train_csv'].replace('train', 'val')
+    val_ds = LabeledDataset(val_csv, params['rawframes_dir'], params['clip_len'], transform=get_transform())
+    val_loader = DataLoader(val_ds, batch_size=params['bs'], shuffle=False, num_workers=4, drop_last=False)
+    log_path = os.path.join(params['save_dir'], 'training_log.txt')
+    with open(log_path, 'w', encoding='utf-8') as logf:
+        logf.write('Epoch\tTrainLoss\tSupLoss\tConsisLoss\tValAcc\tValLoss\tLR\n')
+
+    # === 训练主循环 ===
     for epoch in range(1, params['epochs'] + 1):
         student.train()
         unlabeled_iter = iter(unlabeled_loader)
+        # 记录loss
+        running_loss, running_sup, running_consis = 0, 0, 0
+        batches = 0
 
         for x_l, y_l in labeled_loader:
             x_l = fix_x_shape(x_l, params).to(device)
@@ -206,19 +262,34 @@ def train_teacher_student(params):
                 consis_loss = consis_loss.mean()
 
             loss = sup_loss + params['lambda_u'] * consis_loss
-            # print(f"DEBUG: sup_loss: {sup_loss}, consis_loss: {consis_loss}, loss: {loss}")
 
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
             update_teacher(student, teacher, ema_decay=params['ema_decay'])
 
+            running_loss += loss.item()
+            running_sup  += sup_loss.item()
+            running_consis += consis_loss.item()
+            batches += 1
+
+        avg_loss = running_loss / batches
+        avg_sup  = running_sup / batches
+        avg_consis = running_consis / batches
+
+        # === 验证集评估 ===
+        val_acc, val_loss = evaluate_on_val(teacher, val_loader, device)
         print(
-            f"Epoch {epoch} | "
-            f"SupLoss {sup_loss.item():.4f} | "
-            f"ConsisLoss {consis_loss.item():.4f} | "
-            f"LR {optimizer.param_groups[0]['lr']:.6f}"
+            f"[Epoch {epoch}] TrainLoss: {avg_loss:.4f} | "
+            f"SupLoss: {avg_sup:.4f} | ConsisLoss: {avg_consis:.4f} | "
+            f"ValAcc: {val_acc:.4f} | ValLoss: {val_loss:.4f} | "
+            f"LR: {optimizer.param_groups[0]['lr']:.2e}"
         )
+        with open(log_path, 'a', encoding='utf-8') as logf:
+            logf.write(f"{epoch}\t{avg_loss:.4f}\t{avg_sup:.4f}\t"
+                       f"{avg_consis:.4f}\t{val_acc:.4f}\t{val_loss:.4f}\t"
+                       f"{optimizer.param_groups[0]['lr']:.2e}\n")
+
         if epoch % 10 == 0:
             torch.save(
                 student.state_dict(),

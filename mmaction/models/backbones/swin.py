@@ -604,7 +604,7 @@ class BasicLayer(BaseModule):
             do_downsample (bool): Whether to downsample the output of
                 the current layer. Defaults to True.
         """
-        print('backbone.forward 输入 shape:', x.shape)  # <<< 就加在这里
+        #print('backbone.forward 输入 shape:', x.shape)  # <<< 就加在这里
         # calculate attention mask for SW-MSA
         B, C, D, H, W = x.shape
         window_size, shift_size = get_window_size((D, H, W), self.window_size,
@@ -680,7 +680,7 @@ class PatchEmbed3D(BaseModule):
             torch.Tensor: The video patches of shape
                 :math:`(B, embed_dims, Dp, Hp, Wp)`.
         """
-        print(">>> swin patch_embed 输入 shape:", x.shape)
+        #print(">>> swin patch_embed 输入 shape:", x.shape)
         _, _, D, H, W = x.size()
         if W % self.patch_size[2] != 0:
             x = F.pad(x, (0, self.patch_size[2] - W % self.patch_size[2]))

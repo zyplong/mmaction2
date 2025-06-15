@@ -32,7 +32,7 @@ class Recognizer3D(BaseRecognizer):
                     pipeline. These keys are usually included:
                     ``loss_aux``.
         """
-        print('extract_feat 输入 shape:', inputs.shape)  # <<< 就加在这里
+        #print('extract_feat 输入 shape:', inputs.shape)  # <<< 就加在这里
         # Record the kwargs required by `loss` and `predict`
         loss_predict_kwargs = dict()
 
