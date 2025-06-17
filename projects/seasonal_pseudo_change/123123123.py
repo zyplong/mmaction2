@@ -108,15 +108,110 @@
 # Path(output_jpg).parent.mkdir(parents=True, exist_ok=True)
 # cv2.imwrite(output_jpg, img)
 
-import torch
+# import torch
+#
+# src_pth = r'F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\pretrained\videoswin\swin_tiny_patch244_window877_kinetics400_1k_converted.pth'
+# dst_pth = r'F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\pretrained\videoswin\swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth'
+#
+# ckpt = torch.load(src_pth, map_location='cpu')
+# if 'model' in ckpt:
+#     state_dict = ckpt['model']
+# else:
+#     state_dict = ckpt
+# torch.save(state_dict, dst_pth)
+# print('Converted and saved:', dst_pth)
 
-src_pth = r'F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\pretrained\videoswin\swin_tiny_patch244_window877_kinetics400_1k_converted.pth'
-dst_pth = r'F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\pretrained\videoswin\swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth'
 
-ckpt = torch.load(src_pth, map_location='cpu')
-if 'model' in ckpt:
-    state_dict = ckpt['model']
-else:
-    state_dict = ckpt
-torch.save(state_dict, dst_pth)
-print('Converted and saved:', dst_pth)
+# import os
+# import shutil
+# from PIL import Image
+# import numpy as np
+#
+# def is_black(img_path, threshold=10, percent=0.98):
+#     img = Image.open(img_path).convert('L')  # 灰度
+#     arr = np.array(img)
+#     black_pixels = np.sum(arr < threshold)
+#     total_pixels = arr.size
+#     return (black_pixels / total_pixels) > percent
+#
+# def find_and_remove_black_patches(rawframes_dir, save_log=True):
+#     patches = os.listdir(rawframes_dir)
+#     removed_patches = []
+#     for patch in patches:
+#         patch_dir = os.path.join(rawframes_dir, patch)
+#         if not os.path.isdir(patch_dir):
+#             continue
+#         imgs = [f for f in os.listdir(patch_dir) if f.endswith('.jpg')]
+#         has_black = False
+#         for img_name in imgs:
+#             img_path = os.path.join(patch_dir, img_name)
+#             try:
+#                 if is_black(img_path):
+#                     print(f"检测到黑色图片: {patch}/{img_name}")
+#                     has_black = True
+#                     break   # 一个就够，整个patch删
+#             except Exception as e:
+#                 print(f"读取失败: {img_path}, {e}")
+#         if has_black:
+#             try:
+#                 shutil.rmtree(patch_dir)
+#                 print(f"已删除patch: {patch}")
+#                 removed_patches.append(patch)
+#             except Exception as e:
+#                 print(f"删除失败: {patch_dir}, {e}")
+#     # 保存被删除的patch名单
+#     if save_log and removed_patches:
+#         log_path = os.path.join(rawframes_dir, "removed_patches.txt")
+#         with open(log_path, 'w', encoding='utf-8') as f:
+#             for patch in removed_patches:
+#                 f.write(f"{patch}\n")
+#         print(f"\n所有被删除的patch已保存到: {log_path}")
+#
+# if __name__ == "__main__":
+#     rawframes_dir = "F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes"
+#     find_and_remove_black_patches(rawframes_dir)
+
+# import os
+#
+# def save_valid_patches(rawframes_dir, output_txt=None):
+#     patches = [d for d in os.listdir(rawframes_dir) if os.path.isdir(os.path.join(rawframes_dir, d))]
+#     patches.sort(key=lambda x: int(x.split('_')[1]))
+#     if output_txt is None:
+#         output_txt = os.path.join(rawframes_dir, 'remaining_patches.txt')
+#     with open(output_txt, 'w') as f:
+#         for patch in patches:
+#             f.write(f"{patch}\n")
+#     print(f"剩余有效 patch 数量：{len(patches)}，已保存到 {output_txt}")
+#
+# if __name__ == "__main__":
+#     rawframes_dir = "F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes"
+#     # 不传 output_txt 就默认保存在 rawframes 目录下
+#     save_valid_patches(rawframes_dir)
+
+def filter_split_file(split_txt, remain_txt, out_txt):
+    # 读取 remain 列表
+    with open(remain_txt, 'r') as f:
+        remain_set = set(line.strip() for line in f if line.strip())
+    # 过滤 split，每行第一个是 patch 名
+    filtered = []
+    with open(split_txt, 'r') as f:
+        for line in f:
+            if not line.strip():
+                continue
+            patch_name = line.split()[0]
+            if patch_name in remain_set:
+                filtered.append(line)
+    print(f"原始数量: {sum(1 for _ in open(split_txt))}，过滤后剩余: {len(filtered)}")
+    # 保存
+    with open(out_txt, 'w') as f:
+        for line in filtered:
+            f.write(line)
+
+if __name__ == "__main__":
+    # 修改为实际路径
+    base = "F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/"
+    remain_txt = base + "remaining_patches.txt"
+    # val
+    filter_split_file(base + "val.txt", remain_txt, base + "val_filtered.txt")
+    # train
+    filter_split_file(base + "train.txt", remain_txt, base + "train_filtered.txt")

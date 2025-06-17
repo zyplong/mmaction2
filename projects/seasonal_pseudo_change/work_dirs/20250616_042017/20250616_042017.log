@@ -1,0 +1,1258 @@
+2025/06/16 04:20:22 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: win32
+    Python: 3.10.16 | packaged by Anaconda, Inc. | (main, Dec 11 2024, 16:19:12) [MSC v.1929 64 bit (AMD64)]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 231329761
+    GPU 0: Quadro P1000
+    CUDA_HOME: C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8
+    NVCC: Cuda compilation tools, release 11.8, V11.8.89
+    MSVC: ?? x64 ? Microsoft (R) C/C++ ????? 19.43.34810 ?
+    GCC: n/a
+    PyTorch: 2.1.0+cu118
+    PyTorch compiling details: PyTorch built with:
+  - C++ Version: 199711
+  - MSVC 192930151
+  - Intel(R) Math Kernel Library Version 2020.0.2 Product Build 20200624 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 2019
+  - LAPACK is enabled (usually provided by MKL)
+  - CPU capability usage: AVX512
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.7
+  - Magma 2.5.4
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/builder/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /bigobj /FS -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /utf-8 /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=OFF, TORCH_VERSION=2.1.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.0+cu118
+    OpenCV: 4.11.0
+    MMEngine: 0.10.7
+
+Runtime environment:
+    cudnn_benchmark: False
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 231329761
+    diff_rank_seed: False
+    deterministic: False
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2025/06/16 04:20:23 - mmengine - INFO - Config:
+ann_file_train = 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/train.txt'
+ann_file_unlabeled = 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/unlabeled.txt'
+ann_file_val = 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/val.txt'
+data_prefix = dict(
+    img=
+    'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes'
+)
+data_root = 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes'
+default_hooks = dict(
+    checkpoint=dict(
+        interval=1, max_keep_ckpts=1, save_best='auto', type='CheckpointHook'),
+    logger=dict(ignore_last=False, interval=10, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    runtime_info=dict(type='RuntimeInfoHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    sync_buffers=dict(type='SyncBuffersHook'),
+    timer=dict(type='IterTimerHook'))
+default_scope = 'mmaction'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+launcher = 'none'
+load_from = None
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=20)
+model = dict(
+    backbone=dict(
+        arch='tiny',
+        attn_drop_rate=0.0,
+        drop_path_rate=0.1,
+        drop_rate=0.0,
+        mlp_ratio=4.0,
+        patch_norm=True,
+        patch_size=(
+            2,
+            4,
+            4,
+        ),
+        pretrained=
+        'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth',
+        pretrained2d=False,
+        qk_scale=None,
+        qkv_bias=True,
+        type='SwinTransformer3D',
+        window_size=(
+            8,
+            7,
+            7,
+        )),
+    cls_head=dict(
+        average_clips='prob',
+        dropout_ratio=0.5,
+        in_channels=768,
+        num_classes=2,
+        spatial_type='avg',
+        type='I3DHead'),
+    data_preprocessor=dict(
+        format_shape='NCTHW',
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='ActionDataPreprocessor'),
+    type='Recognizer3D')
+optim_wrapper = dict(
+    constructor='SwinOptimWrapperConstructor',
+    loss_scale='dynamic',
+    optimizer=dict(
+        betas=(
+            0.9,
+            0.999,
+        ), lr=0.001, type='AdamW', weight_decay=0.02),
+    paramwise_cfg=dict(
+        absolute_pos_embed=dict(decay_mult=0.0),
+        backbone=dict(lr_mult=0.1),
+        bias=dict(decay_mult=0.0),
+        norm=dict(decay_mult=0.0),
+        relative_position_bias_table=dict(decay_mult=0.0)),
+    type='AmpOptimWrapper')
+param_scheduler = [
+    dict(
+        begin=0,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=2.5,
+        start_factor=0.1,
+        type='LinearLR'),
+    dict(
+        T_max=30,
+        begin=0,
+        by_epoch=True,
+        end=30,
+        eta_min=0,
+        type='CosineAnnealingLR'),
+]
+randomness = dict(deterministic=False, diff_rank_seed=False, seed=None)
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=4,
+    dataset=dict(
+        ann_file=
+        'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/val.txt',
+        data_prefix=dict(
+            img=
+            'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes'
+        ),
+        filename_tmpl='img_{:04d}.jpg',
+        pipeline=[
+            dict(
+                clip_len=8,
+                frame_interval=1,
+                num_clips=1,
+                test_mode=True,
+                type='SampleFrames'),
+            dict(type='RawFrameDecode'),
+            dict(scale=(
+                -1,
+                256,
+            ), type='Resize'),
+            dict(crop_size=224, type='CenterCrop'),
+            dict(input_format='NCTHW', type='FormatShape'),
+            dict(type='PackActionInputs'),
+        ],
+        test_mode=True,
+        type='RawframeDataset'),
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(type='AccMetric')
+train_cfg = dict(
+    max_epochs=1, type='EpochBasedTrainLoop', val_begin=1, val_interval=1)
+train_dataloader = dict(
+    batch_size=4,
+    dataset=dict(
+        ann_file=
+        'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/train.txt',
+        data_prefix=dict(
+            img=
+            'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes'
+        ),
+        filename_tmpl='img_{:04d}.jpg',
+        pipeline=[
+            dict(
+                clip_len=8, frame_interval=1, num_clips=1,
+                type='SampleFrames'),
+            dict(type='RawFrameDecode'),
+            dict(scale=(
+                -1,
+                256,
+            ), type='Resize'),
+            dict(type='RandomResizedCrop'),
+            dict(keep_ratio=False, scale=(
+                224,
+                224,
+            ), type='Resize'),
+            dict(flip_ratio=0.5, type='Flip'),
+            dict(input_format='NCTHW', type='FormatShape'),
+            dict(type='PackActionInputs'),
+        ],
+        type='RawframeDataset'),
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+unlabeled_dataloader = dict(
+    batch_size=4,
+    dataset=dict(
+        ann_file=
+        'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/unlabeled.txt',
+        data_prefix=dict(
+            img=
+            'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes'
+        ),
+        filename_tmpl='img_{:04d}.jpg',
+        pipeline=[
+            dict(
+                clip_len=8, frame_interval=1, num_clips=1,
+                type='SampleFrames'),
+            dict(type='RawFrameDecode'),
+            dict(scale=(
+                -1,
+                256,
+            ), type='Resize'),
+            dict(type='RandomResizedCrop'),
+            dict(keep_ratio=False, scale=(
+                224,
+                224,
+            ), type='Resize'),
+            dict(flip_ratio=0.5, type='Flip'),
+            dict(input_format='NCTHW', type='FormatShape'),
+            dict(type='PackActionInputs'),
+        ],
+        type='RawframeDataset'),
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=4,
+    dataset=dict(
+        ann_file=
+        'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/val.txt',
+        data_prefix=dict(
+            img=
+            'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes'
+        ),
+        filename_tmpl='img_{:04d}.jpg',
+        pipeline=[
+            dict(
+                clip_len=8,
+                frame_interval=1,
+                num_clips=1,
+                test_mode=True,
+                type='SampleFrames'),
+            dict(type='RawFrameDecode'),
+            dict(scale=(
+                -1,
+                256,
+            ), type='Resize'),
+            dict(crop_size=224, type='CenterCrop'),
+            dict(input_format='NCTHW', type='FormatShape'),
+            dict(type='PackActionInputs'),
+        ],
+        test_mode=True,
+        type='RawframeDataset'),
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(type='AccMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    type='ActionVisualizer', vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = 'F:\\zyp\\Thesis source code\\mmaction2\\projects\\seasonal_pseudo_change\\work_dirs'
+
+2025/06/16 04:20:26 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2025/06/16 04:20:26 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SyncBuffersHook                    
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SyncBuffersHook                    
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.patch_embed.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.patch_embed.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.patch_embed.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.patch_embed.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.patch_embed.norm.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.patch_embed.norm.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.patch_embed.norm.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.patch_embed.norm.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.0.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.blocks.1.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.downsample.reduction.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.downsample.reduction.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.downsample.norm.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.downsample.norm.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.downsample.norm.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.0.downsample.norm.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.0.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.blocks.1.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.downsample.reduction.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.downsample.reduction.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.downsample.norm.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.downsample.norm.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.downsample.norm.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.1.downsample.norm.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.0.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.1.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.2.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.3.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.4.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.blocks.5.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.downsample.reduction.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.downsample.reduction.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.downsample.norm.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.downsample.norm.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.downsample.norm.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.2.downsample.norm.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.0.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.norm1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.norm1.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.norm1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.norm1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.relative_position_bias_table: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.relative_position_bias_table: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.qkv.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.qkv.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.qkv.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.qkv.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.proj.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.proj.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.proj.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.attn.proj.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.norm2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.norm2.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.norm2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.norm2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.mlp.fc1.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.mlp.fc1.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.mlp.fc1.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.mlp.fc1.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.mlp.fc2.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.mlp.fc2.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.mlp.fc2.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.layers.3.blocks.1.mlp.fc2.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.norm3.weight: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.norm3.weight: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.norm3.bias: lr = 0.0001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.backbone.norm3.bias: weight_decay = 0.0
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.cls_head.fc_cls.weight: lr = 0.001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.cls_head.fc_cls.weight: weight_decay = 0.02
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.cls_head.fc_cls.bias: lr = 0.001
+2025/06/16 04:20:30 - mmengine - INFO - paramwise_options -- base.cls_head.fc_cls.bias: weight_decay = 0.0
+2025/06/16 04:20:31 - mmengine - INFO - load model from: F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth
+2025/06/16 04:20:31 - mmengine - INFO - Loads checkpoint by local backend from path: F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth
+2025/06/16 04:20:31 - mmengine - WARNING - The model and loaded state dict do not match exactly
+
+unexpected key in source state_dict: norm.weight, norm.bias, cls_head.fc_cls.weight, cls_head.fc_cls.bias
+
+missing keys in source state_dict: norm3.weight, norm3.bias
+
+Name of parameter - Initialization information
+
+backbone.patch_embed.proj.weight - torch.Size([96, 3, 2, 4, 4]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.patch_embed.proj.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.patch_embed.norm.weight - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.patch_embed.norm.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.norm1.weight - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.norm1.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.attn.relative_position_bias_table - torch.Size([2535, 3]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.attn.qkv.weight - torch.Size([288, 96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.attn.qkv.bias - torch.Size([288]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.attn.proj.weight - torch.Size([96, 96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.attn.proj.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.norm2.weight - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.norm2.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.mlp.fc1.weight - torch.Size([384, 96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.mlp.fc1.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.mlp.fc2.weight - torch.Size([96, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.0.mlp.fc2.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.norm1.weight - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.norm1.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.attn.relative_position_bias_table - torch.Size([2535, 3]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.attn.qkv.weight - torch.Size([288, 96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.attn.qkv.bias - torch.Size([288]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.attn.proj.weight - torch.Size([96, 96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.attn.proj.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.norm2.weight - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.norm2.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.mlp.fc1.weight - torch.Size([384, 96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.mlp.fc1.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.mlp.fc2.weight - torch.Size([96, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.blocks.1.mlp.fc2.bias - torch.Size([96]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.downsample.reduction.weight - torch.Size([192, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.downsample.norm.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.0.downsample.norm.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.norm1.weight - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.norm1.bias - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.attn.relative_position_bias_table - torch.Size([2535, 6]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.attn.qkv.weight - torch.Size([576, 192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.attn.qkv.bias - torch.Size([576]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.attn.proj.weight - torch.Size([192, 192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.attn.proj.bias - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.norm2.weight - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.norm2.bias - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.mlp.fc1.weight - torch.Size([768, 192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.mlp.fc1.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.mlp.fc2.weight - torch.Size([192, 768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.0.mlp.fc2.bias - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.norm1.weight - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.norm1.bias - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.attn.relative_position_bias_table - torch.Size([2535, 6]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.attn.qkv.weight - torch.Size([576, 192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.attn.qkv.bias - torch.Size([576]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.attn.proj.weight - torch.Size([192, 192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.attn.proj.bias - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.norm2.weight - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.norm2.bias - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.mlp.fc1.weight - torch.Size([768, 192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.mlp.fc1.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.mlp.fc2.weight - torch.Size([192, 768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.blocks.1.mlp.fc2.bias - torch.Size([192]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.downsample.reduction.weight - torch.Size([384, 768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.downsample.norm.weight - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.1.downsample.norm.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.norm1.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.norm1.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.attn.relative_position_bias_table - torch.Size([2535, 12]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.attn.qkv.weight - torch.Size([1152, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.attn.qkv.bias - torch.Size([1152]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.attn.proj.weight - torch.Size([384, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.attn.proj.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.norm2.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.norm2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.mlp.fc1.weight - torch.Size([1536, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.mlp.fc1.bias - torch.Size([1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.mlp.fc2.weight - torch.Size([384, 1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.0.mlp.fc2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.norm1.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.norm1.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.attn.relative_position_bias_table - torch.Size([2535, 12]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.attn.qkv.weight - torch.Size([1152, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.attn.qkv.bias - torch.Size([1152]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.attn.proj.weight - torch.Size([384, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.attn.proj.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.norm2.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.norm2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.mlp.fc1.weight - torch.Size([1536, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.mlp.fc1.bias - torch.Size([1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.mlp.fc2.weight - torch.Size([384, 1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.1.mlp.fc2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.norm1.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.norm1.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.attn.relative_position_bias_table - torch.Size([2535, 12]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.attn.qkv.weight - torch.Size([1152, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.attn.qkv.bias - torch.Size([1152]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.attn.proj.weight - torch.Size([384, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.attn.proj.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.norm2.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.norm2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.mlp.fc1.weight - torch.Size([1536, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.mlp.fc1.bias - torch.Size([1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.mlp.fc2.weight - torch.Size([384, 1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.2.mlp.fc2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.norm1.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.norm1.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.attn.relative_position_bias_table - torch.Size([2535, 12]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.attn.qkv.weight - torch.Size([1152, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.attn.qkv.bias - torch.Size([1152]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.attn.proj.weight - torch.Size([384, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.attn.proj.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.norm2.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.norm2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.mlp.fc1.weight - torch.Size([1536, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.mlp.fc1.bias - torch.Size([1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.mlp.fc2.weight - torch.Size([384, 1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.3.mlp.fc2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.norm1.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.norm1.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.attn.relative_position_bias_table - torch.Size([2535, 12]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.attn.qkv.weight - torch.Size([1152, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.attn.qkv.bias - torch.Size([1152]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.attn.proj.weight - torch.Size([384, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.attn.proj.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.norm2.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.norm2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.mlp.fc1.weight - torch.Size([1536, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.mlp.fc1.bias - torch.Size([1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.mlp.fc2.weight - torch.Size([384, 1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.4.mlp.fc2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.norm1.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.norm1.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.attn.relative_position_bias_table - torch.Size([2535, 12]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.attn.qkv.weight - torch.Size([1152, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.attn.qkv.bias - torch.Size([1152]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.attn.proj.weight - torch.Size([384, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.attn.proj.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.norm2.weight - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.norm2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.mlp.fc1.weight - torch.Size([1536, 384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.mlp.fc1.bias - torch.Size([1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.mlp.fc2.weight - torch.Size([384, 1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.blocks.5.mlp.fc2.bias - torch.Size([384]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.downsample.reduction.weight - torch.Size([768, 1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.downsample.norm.weight - torch.Size([1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.2.downsample.norm.bias - torch.Size([1536]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.norm1.weight - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.norm1.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.attn.relative_position_bias_table - torch.Size([2535, 24]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.attn.qkv.weight - torch.Size([2304, 768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.attn.qkv.bias - torch.Size([2304]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.attn.proj.weight - torch.Size([768, 768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.attn.proj.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.norm2.weight - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.norm2.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.mlp.fc1.weight - torch.Size([3072, 768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.mlp.fc1.bias - torch.Size([3072]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.mlp.fc2.weight - torch.Size([768, 3072]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.0.mlp.fc2.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.norm1.weight - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.norm1.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.attn.relative_position_bias_table - torch.Size([2535, 24]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.attn.qkv.weight - torch.Size([2304, 768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.attn.qkv.bias - torch.Size([2304]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.attn.proj.weight - torch.Size([768, 768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.attn.proj.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.norm2.weight - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.norm2.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.mlp.fc1.weight - torch.Size([3072, 768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.mlp.fc1.bias - torch.Size([3072]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.mlp.fc2.weight - torch.Size([768, 3072]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.layers.3.blocks.1.mlp.fc2.bias - torch.Size([768]): 
+PretrainedInit: load from F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth 
+
+backbone.norm3.weight - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of Recognizer3D  
+
+backbone.norm3.bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of Recognizer3D  
+
+cls_head.fc_cls.weight - torch.Size([2, 768]): 
+Initialized by user-defined `init_weights` in I3DHead  
+
+cls_head.fc_cls.bias - torch.Size([2]): 
+Initialized by user-defined `init_weights` in I3DHead  
+2025/06/16 04:20:31 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2025/06/16 04:20:31 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2025/06/16 04:20:31 - mmengine - INFO - Checkpoints will be saved to F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\work_dirs.
+2025/06/16 04:20:46 - mmengine - INFO - Epoch(train) [1][10/11]  base_lr: 4.1154e-04 lr: 4.1154e-05  eta: 0:00:01  time: 1.5088  data_time: 0.5159  memory: 2158  loss: 0.7110  top1_acc: 0.7500  top5_acc: 1.0000  loss_cls: 0.7110
+2025/06/16 04:20:47 - mmengine - INFO - Exp name: swin_tiny_raw_20250616_042017
+2025/06/16 04:20:47 - mmengine - INFO - Epoch(train) [1][11/11]  base_lr: 4.4615e-04 lr: 4.4615e-05  eta: 0:00:00  time: 1.4595  data_time: 0.4697  memory: 2158  loss: 0.7025  top1_acc: 0.7500  top5_acc: 1.0000  loss_cls: 0.7025
+2025/06/16 04:20:47 - mmengine - INFO - Saving checkpoint at 1 epochs
+2025/06/16 04:20:58 - mmengine - INFO - Epoch(val) [1][3/3]    acc/top1: 0.5455  acc/top5: 1.0000  acc/mean1: 0.5000  data_time: 1.7164  time: 2.0670
+2025/06/16 04:21:01 - mmengine - INFO - The best checkpoint with 0.5455 acc/top1 at 1 epoch is saved to best_acc_top1_epoch_1.pth.

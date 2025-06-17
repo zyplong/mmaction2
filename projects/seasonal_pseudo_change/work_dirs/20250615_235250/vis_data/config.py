@@ -136,7 +136,7 @@ test_dataloader = dict(
     sampler=dict(shuffle=False, type='DefaultSampler'))
 test_evaluator = dict(type='AccMetric')
 train_cfg = dict(
-    max_epochs=1, type='EpochBasedTrainLoop', val_begin=1, val_interval=1)
+    max_epochs=50, type='EpochBasedTrainLoop', val_begin=1, val_interval=1)
 train_dataloader = dict(
     batch_size=4,
     dataset=dict(

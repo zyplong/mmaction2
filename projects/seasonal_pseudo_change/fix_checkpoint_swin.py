@@ -219,7 +219,6 @@ def train_teacher_student(params):
     import copy
     from mmaction.apis import init_recognizer
 
-    # ===== 日志、可视化、快照 =====
     logger = setup_logger(params['save_dir'])
     save_config(params['config'], params['save_dir'], params)
     writer = SummaryWriter(log_dir=os.path.join(params['save_dir'], 'vis_data'))
@@ -259,7 +258,6 @@ def train_teacher_student(params):
     val_ds = LabeledDataset(val_csv, params['rawframes_dir'], params['clip_len'], transform=get_transform())
     val_loader = DataLoader(val_ds, batch_size=params['bs'], shuffle=False, num_workers=4, drop_last=False)
 
-    # 日志文件头
     log_path = os.path.join(params['save_dir'], 'training_log.txt')
     with open(log_path, 'w', encoding='utf-8') as logf:
         logf.write('Epoch\tTrainLoss\tSupLoss\tConsisLoss\tTrainAcc\tValAcc\tValLoss\tLR\n')
@@ -282,18 +280,36 @@ def train_teacher_student(params):
                 x_u = next(unlabeled_iter)
             x_u = fix_x_shape(x_u, params).to(device)
 
-            sup_loss = student(x_l, y_l, return_loss=True)
-            if isinstance(sup_loss, dict):
-                sup_loss = sup_loss['loss_cls']
-            if hasattr(sup_loss, "dim") and sup_loss.dim() > 0:
-                sup_loss = sup_loss.mean()
+            # ---- Forward student, logits only ----
+            logits = student(x_l, return_loss=False)
+            if isinstance(logits, (tuple, list)):
+                logits = logits[0]
+            if hasattr(logits, "logits"):
+                logits = logits.logits
+            if logits.dim() > 2:
+                logits_flat = logits.mean(dim=list(range(2, logits.dim())))
+            else:
+                logits_flat = logits
 
+            sup_loss = criterion(logits_flat, y_l)
+
+            # ---- Consistency loss ----
             with torch.no_grad():
                 t_logits_u = teacher(x_u, return_loss=False)
+                if isinstance(t_logits_u, (tuple, list)):
+                    t_logits_u = t_logits_u[0]
+                if hasattr(t_logits_u, "logits"):
+                    t_logits_u = t_logits_u.logits
+                if t_logits_u.dim() > 2:
+                    t_logits_u = t_logits_u.mean(dim=list(range(2, t_logits_u.dim())))
             s_logits_u = student(x_u, return_loss=False)
+            if isinstance(s_logits_u, (tuple, list)):
+                s_logits_u = s_logits_u[0]
+            if hasattr(s_logits_u, "logits"):
+                s_logits_u = s_logits_u.logits
+            if s_logits_u.dim() > 2:
+                s_logits_u = s_logits_u.mean(dim=list(range(2, s_logits_u.dim())))
             consis_loss = consis_criterion(s_logits_u, t_logits_u)
-            if hasattr(consis_loss, "dim") and consis_loss.dim() > 0:
-                consis_loss = consis_loss.mean()
 
             loss = sup_loss + params['lambda_u'] * consis_loss
 
@@ -332,7 +348,6 @@ def train_teacher_student(params):
         writer.add_scalar('Eval/ValLoss', val_loss, epoch)
         writer.add_scalar('LR', optimizer.param_groups[0]['lr'], epoch)
 
-        # 权重保存（分阶段+best）
         if epoch % 10 == 0:
             torch.save(student.state_dict(), os.path.join(params['save_dir'], f'student_epoch_{epoch}.pth'))
             torch.save(teacher.state_dict(), os.path.join(params['save_dir'], f'teacher_epoch_{epoch}.pth'))
