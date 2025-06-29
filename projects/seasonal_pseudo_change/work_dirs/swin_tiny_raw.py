@@ -89,14 +89,14 @@ param_scheduler = [
         begin=0,
         by_epoch=True,
         convert_to_iter_based=True,
-        end=2.5,
+        end=2,
         start_factor=0.1,
         type='LinearLR'),
     dict(
-        T_max=30,
-        begin=0,
+        T_max=48,
+        begin=2,
         by_epoch=True,
-        end=30,
+        end=50,
         eta_min=0,
         type='CosineAnnealingLR'),
 ]
@@ -115,7 +115,7 @@ test_dataloader = dict(
         filename_tmpl='img_{:04d}.jpg',
         pipeline=[
             dict(
-                clip_len=8,
+                clip_len=20,
                 frame_interval=1,
                 num_clips=1,
                 test_mode=True,
@@ -136,7 +136,7 @@ test_dataloader = dict(
     sampler=dict(shuffle=False, type='DefaultSampler'))
 test_evaluator = dict(type='AccMetric')
 train_cfg = dict(
-    max_epochs=1, type='EpochBasedTrainLoop', val_begin=1, val_interval=1)
+    max_epochs=50, type='EpochBasedTrainLoop', val_begin=1, val_interval=1)
 train_dataloader = dict(
     batch_size=4,
     dataset=dict(
@@ -149,7 +149,9 @@ train_dataloader = dict(
         filename_tmpl='img_{:04d}.jpg',
         pipeline=[
             dict(
-                clip_len=8, frame_interval=1, num_clips=1,
+                clip_len=20,
+                frame_interval=1,
+                num_clips=1,
                 type='SampleFrames'),
             dict(type='RawFrameDecode'),
             dict(scale=(
@@ -181,7 +183,9 @@ unlabeled_dataloader = dict(
         filename_tmpl='img_{:04d}.jpg',
         pipeline=[
             dict(
-                clip_len=8, frame_interval=1, num_clips=1,
+                clip_len=20,
+                frame_interval=1,
+                num_clips=1,
                 type='SampleFrames'),
             dict(type='RawFrameDecode'),
             dict(scale=(
@@ -214,7 +218,7 @@ val_dataloader = dict(
         filename_tmpl='img_{:04d}.jpg',
         pipeline=[
             dict(
-                clip_len=8,
+                clip_len=20,
                 frame_interval=1,
                 num_clips=1,
                 test_mode=True,

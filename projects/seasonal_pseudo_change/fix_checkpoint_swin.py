@@ -63,7 +63,9 @@ def extract_semi_params(cfg):
     params['train_csv'] = cfg.ann_file_train.replace('.txt', '.csv')
     params['unlabeled_csv'] = getattr(cfg, 'ann_file_unlabeled', None)
     params['rawframes_dir'] = cfg.data_root
-    params['clip_len'] = 8
+    # 自动同步clip_len（取train_dataloader的pipeline第一个SampleFrames）
+    sample_cfg = cfg.train_dataloader['dataset']['pipeline'][0]
+    params['clip_len'] = sample_cfg.get('clip_len', 8)
     params['bs'] = cfg.train_dataloader.get('batch_size', 8)
     params['unlab_mult'] = 1
     params['lr'] = cfg.optim_wrapper['optimizer'].get('lr', 0.005)
@@ -83,7 +85,7 @@ def get_transform():
     ])
 
 class LabeledDataset(torch.utils.data.Dataset):
-    def __init__(self, file_path, rawframes_dir, clip_len=8, transform=None):
+    def __init__(self, file_path, rawframes_dir, clip_len, transform=None):
         self.df = pd.read_csv(file_path, sep=None, engine='python', header=None, names=['patch_id', 'frame_num', 'label'])
         self.df = self.df[self.df['label'] != 'label']
         self.df = self.df[self.df['label'].astype(str).str.strip() != '']
@@ -121,7 +123,7 @@ class LabeledDataset(torch.utils.data.Dataset):
         return imgs
 
 class UnlabeledDataset(torch.utils.data.Dataset):
-    def __init__(self, txt_file, rawframes_dir, clip_len=8, transform=None):
+    def __init__(self, txt_file, rawframes_dir, clip_len, transform=None):
         with open(txt_file) as f:
             self.patch_ids = [line.strip() for line in f if line.strip()]
         self.rawframes_dir = rawframes_dir
@@ -224,6 +226,7 @@ def train_teacher_student(params):
     writer = SummaryWriter(log_dir=os.path.join(params['save_dir'], 'vis_data'))
 
     logger.info("Experiment started. Params: %s", str(params))
+    logger.info(f"clip_len = {params['clip_len']}")
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     student = init_recognizer(params['config'], params['checkpoint'], device=device)
@@ -360,7 +363,6 @@ def train_teacher_student(params):
     torch.save(teacher.state_dict(), os.path.join(params['save_dir'], 'teacher_final.pth'))
     logger.info(f"Best teacher model saved to {os.path.join(params['save_dir'], 'teacher_final.pth')}")
     logger.info("Experiment finished.")
-
 
 if __name__ == '__main__':
     assert len(sys.argv) == 2, "用法: python fix_checkpoint_swin.py configs/downstream_videoswin/xxx.py"

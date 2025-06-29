@@ -1,0 +1,56 @@
+2025-06-27 01:54:34,282 - INFO - Experiment started. Params: {'config': 'F:\\zyp\\Thesis source code\\mmaction2\\projects\\seasonal_pseudo_change\\configs/downstream_videoswin/swin_tiny_raw.py', 'checkpoint': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth', 'train_csv': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/train.csv', 'unlabeled_csv': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/unlabeled.txt', 'rawframes_dir': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes', 'clip_len': 8, 'bs': 4, 'unlab_mult': 1, 'lr': 0.001, 'tau': 0.95, 'lambda_u': 1.0, 'epochs': 50, 'save_dir': 'F:\\zyp\\Thesis source code\\mmaction2\\projects\\seasonal_pseudo_change\\work_dirs\\swin_tiny_raw_20250627_015434', 'ema_decay': 0.99, 'val_csv': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/val.txt'}
+2025-06-27 01:56:56,178 - INFO - [Epoch 1] TrainLoss: 3.9997 | SupLoss: 2.4370 | ConsisLoss: 1.5627 | TrainAcc: 0.0000 | ValAcc: 0.0000 | ValLoss: 7.6275 | LR: 1.00e-03
+2025-06-27 01:59:17,068 - INFO - [Epoch 2] TrainLoss: 2.6581 | SupLoss: 1.5663 | ConsisLoss: 1.0918 | TrainAcc: 0.0000 | ValAcc: 0.0000 | ValLoss: 7.2307 | LR: 1.00e-03
+2025-06-27 02:01:39,940 - INFO - [Epoch 3] TrainLoss: 1.9230 | SupLoss: 1.0546 | ConsisLoss: 0.8683 | TrainAcc: 0.0312 | ValAcc: 0.0588 | ValLoss: 4.6695 | LR: 1.00e-03
+2025-06-27 02:01:40,149 - INFO - *** New best model saved at epoch 3, ValAcc=0.0588 ***
+2025-06-27 02:03:58,567 - INFO - [Epoch 4] TrainLoss: 1.1258 | SupLoss: 0.6726 | ConsisLoss: 0.4532 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 1.0899 | LR: 1.00e-03
+2025-06-27 02:03:58,736 - INFO - *** New best model saved at epoch 4, ValAcc=0.7059 ***
+2025-06-27 02:06:17,320 - INFO - [Epoch 5] TrainLoss: 0.9430 | SupLoss: 0.7915 | ConsisLoss: 0.1515 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.7439 | LR: 1.00e-03
+2025-06-27 02:08:36,148 - INFO - [Epoch 6] TrainLoss: 0.6538 | SupLoss: 0.5924 | ConsisLoss: 0.0614 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.7123 | LR: 1.00e-03
+2025-06-27 02:10:53,178 - INFO - [Epoch 7] TrainLoss: 0.6603 | SupLoss: 0.6303 | ConsisLoss: 0.0301 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6917 | LR: 1.00e-03
+2025-06-27 02:13:19,191 - INFO - [Epoch 8] TrainLoss: 0.6407 | SupLoss: 0.6210 | ConsisLoss: 0.0197 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6745 | LR: 1.00e-03
+2025-06-27 02:15:42,116 - INFO - [Epoch 9] TrainLoss: 0.6485 | SupLoss: 0.6360 | ConsisLoss: 0.0124 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6655 | LR: 1.00e-03
+2025-06-27 02:18:07,108 - INFO - [Epoch 10] TrainLoss: 0.6330 | SupLoss: 0.6210 | ConsisLoss: 0.0120 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6547 | LR: 1.00e-03
+2025-06-27 02:20:22,387 - INFO - [Epoch 11] TrainLoss: 0.6037 | SupLoss: 0.5939 | ConsisLoss: 0.0098 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6481 | LR: 1.00e-03
+2025-06-27 02:22:42,818 - INFO - [Epoch 12] TrainLoss: 0.8300 | SupLoss: 0.8217 | ConsisLoss: 0.0083 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6537 | LR: 1.00e-03
+2025-06-27 02:25:02,793 - INFO - [Epoch 13] TrainLoss: 0.6263 | SupLoss: 0.6207 | ConsisLoss: 0.0056 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6512 | LR: 1.00e-03
+2025-06-27 02:27:24,711 - INFO - [Epoch 14] TrainLoss: 0.7322 | SupLoss: 0.7246 | ConsisLoss: 0.0077 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6481 | LR: 1.00e-03
+2025-06-27 02:29:46,623 - INFO - [Epoch 15] TrainLoss: 0.5636 | SupLoss: 0.5569 | ConsisLoss: 0.0067 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6394 | LR: 1.00e-03
+2025-06-27 02:32:06,792 - INFO - [Epoch 16] TrainLoss: 0.6380 | SupLoss: 0.6333 | ConsisLoss: 0.0047 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6318 | LR: 1.00e-03
+2025-06-27 02:34:27,558 - INFO - [Epoch 17] TrainLoss: 0.6355 | SupLoss: 0.6292 | ConsisLoss: 0.0062 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6246 | LR: 1.00e-03
+2025-06-27 02:36:54,232 - INFO - [Epoch 18] TrainLoss: 0.6654 | SupLoss: 0.6601 | ConsisLoss: 0.0054 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6222 | LR: 1.00e-03
+2025-06-27 02:39:15,743 - INFO - [Epoch 19] TrainLoss: 0.7825 | SupLoss: 0.7749 | ConsisLoss: 0.0076 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6268 | LR: 1.00e-03
+2025-06-27 02:41:34,411 - INFO - [Epoch 20] TrainLoss: 0.6422 | SupLoss: 0.6349 | ConsisLoss: 0.0073 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6217 | LR: 1.00e-03
+2025-06-27 02:43:57,412 - INFO - [Epoch 21] TrainLoss: 0.6116 | SupLoss: 0.6053 | ConsisLoss: 0.0063 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6222 | LR: 1.00e-03
+2025-06-27 02:46:25,394 - INFO - [Epoch 22] TrainLoss: 0.6657 | SupLoss: 0.6616 | ConsisLoss: 0.0041 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6154 | LR: 1.00e-03
+2025-06-27 02:48:45,263 - INFO - [Epoch 23] TrainLoss: 0.5535 | SupLoss: 0.5487 | ConsisLoss: 0.0048 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6092 | LR: 1.00e-03
+2025-06-27 02:51:01,614 - INFO - [Epoch 24] TrainLoss: 0.7533 | SupLoss: 0.7480 | ConsisLoss: 0.0053 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.6042 | LR: 1.00e-03
+2025-06-27 02:53:18,539 - INFO - [Epoch 25] TrainLoss: 0.7069 | SupLoss: 0.7012 | ConsisLoss: 0.0057 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.5969 | LR: 1.00e-03
+2025-06-27 02:55:35,219 - INFO - [Epoch 26] TrainLoss: 0.4956 | SupLoss: 0.4897 | ConsisLoss: 0.0059 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.5832 | LR: 1.00e-03
+2025-06-27 02:57:55,823 - INFO - [Epoch 27] TrainLoss: 0.4363 | SupLoss: 0.4256 | ConsisLoss: 0.0108 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.5638 | LR: 1.00e-03
+2025-06-27 03:00:14,411 - INFO - [Epoch 28] TrainLoss: 0.4843 | SupLoss: 0.4755 | ConsisLoss: 0.0088 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.5484 | LR: 1.00e-03
+2025-06-27 03:02:34,568 - INFO - [Epoch 29] TrainLoss: 0.5072 | SupLoss: 0.4954 | ConsisLoss: 0.0118 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.5337 | LR: 1.00e-03
+2025-06-27 03:04:56,160 - INFO - [Epoch 30] TrainLoss: 0.5889 | SupLoss: 0.5780 | ConsisLoss: 0.0109 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.5196 | LR: 1.00e-03
+2025-06-27 03:07:21,142 - INFO - [Epoch 31] TrainLoss: 0.4948 | SupLoss: 0.4873 | ConsisLoss: 0.0074 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.5110 | LR: 1.00e-03
+2025-06-27 03:09:41,263 - INFO - [Epoch 32] TrainLoss: 0.5449 | SupLoss: 0.5348 | ConsisLoss: 0.0100 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.5053 | LR: 1.00e-03
+2025-06-27 03:12:03,762 - INFO - [Epoch 33] TrainLoss: 0.5060 | SupLoss: 0.4978 | ConsisLoss: 0.0082 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.4884 | LR: 1.00e-03
+2025-06-27 03:14:24,376 - INFO - [Epoch 34] TrainLoss: 0.5080 | SupLoss: 0.5010 | ConsisLoss: 0.0070 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.4755 | LR: 1.00e-03
+2025-06-27 03:16:45,431 - INFO - [Epoch 35] TrainLoss: 0.4370 | SupLoss: 0.4284 | ConsisLoss: 0.0087 | TrainAcc: 0.7656 | ValAcc: 0.7059 | ValLoss: 0.4606 | LR: 1.00e-03
+2025-06-27 03:19:05,037 - INFO - [Epoch 36] TrainLoss: 0.5008 | SupLoss: 0.4934 | ConsisLoss: 0.0074 | TrainAcc: 0.7812 | ValAcc: 0.7059 | ValLoss: 0.4538 | LR: 1.00e-03
+2025-06-27 03:21:28,096 - INFO - [Epoch 37] TrainLoss: 0.4746 | SupLoss: 0.4683 | ConsisLoss: 0.0062 | TrainAcc: 0.8125 | ValAcc: 0.7059 | ValLoss: 0.4464 | LR: 1.00e-03
+2025-06-27 03:23:48,359 - INFO - [Epoch 38] TrainLoss: 0.4300 | SupLoss: 0.4167 | ConsisLoss: 0.0133 | TrainAcc: 0.8125 | ValAcc: 0.7059 | ValLoss: 0.4329 | LR: 1.00e-03
+2025-06-27 03:26:05,313 - INFO - [Epoch 39] TrainLoss: 0.5168 | SupLoss: 0.5087 | ConsisLoss: 0.0081 | TrainAcc: 0.7969 | ValAcc: 0.7059 | ValLoss: 0.4264 | LR: 1.00e-03
+2025-06-27 03:28:25,972 - INFO - [Epoch 40] TrainLoss: 0.4103 | SupLoss: 0.4051 | ConsisLoss: 0.0051 | TrainAcc: 0.7656 | ValAcc: 0.7059 | ValLoss: 0.4201 | LR: 1.00e-03
+2025-06-27 03:30:46,144 - INFO - [Epoch 41] TrainLoss: 0.4134 | SupLoss: 0.4065 | ConsisLoss: 0.0069 | TrainAcc: 0.7812 | ValAcc: 0.7059 | ValLoss: 0.4203 | LR: 1.00e-03
+2025-06-27 03:33:09,175 - INFO - [Epoch 42] TrainLoss: 0.4043 | SupLoss: 0.3983 | ConsisLoss: 0.0061 | TrainAcc: 0.7969 | ValAcc: 0.7059 | ValLoss: 0.4167 | LR: 1.00e-03
+2025-06-27 03:35:29,305 - INFO - [Epoch 43] TrainLoss: 0.4444 | SupLoss: 0.4379 | ConsisLoss: 0.0066 | TrainAcc: 0.8125 | ValAcc: 0.7647 | ValLoss: 0.4081 | LR: 1.00e-03
+2025-06-27 03:35:29,474 - INFO - *** New best model saved at epoch 43, ValAcc=0.7647 ***
+2025-06-27 03:37:50,674 - INFO - [Epoch 44] TrainLoss: 0.4634 | SupLoss: 0.4549 | ConsisLoss: 0.0086 | TrainAcc: 0.8281 | ValAcc: 0.7647 | ValLoss: 0.4048 | LR: 1.00e-03
+2025-06-27 03:40:13,639 - INFO - [Epoch 45] TrainLoss: 0.6511 | SupLoss: 0.6391 | ConsisLoss: 0.0119 | TrainAcc: 0.7969 | ValAcc: 0.7059 | ValLoss: 0.4176 | LR: 1.00e-03
+2025-06-27 03:42:37,159 - INFO - [Epoch 46] TrainLoss: 0.4691 | SupLoss: 0.4624 | ConsisLoss: 0.0067 | TrainAcc: 0.7969 | ValAcc: 0.7059 | ValLoss: 0.4233 | LR: 1.00e-03
+2025-06-27 03:44:56,997 - INFO - [Epoch 47] TrainLoss: 0.4029 | SupLoss: 0.3952 | ConsisLoss: 0.0077 | TrainAcc: 0.7969 | ValAcc: 0.7059 | ValLoss: 0.4217 | LR: 1.00e-03
+2025-06-27 03:47:13,195 - INFO - [Epoch 48] TrainLoss: 0.5046 | SupLoss: 0.4657 | ConsisLoss: 0.0388 | TrainAcc: 0.8125 | ValAcc: 0.7059 | ValLoss: 0.4134 | LR: 1.00e-03
+2025-06-27 03:49:35,810 - INFO - [Epoch 49] TrainLoss: 0.5231 | SupLoss: 0.5189 | ConsisLoss: 0.0042 | TrainAcc: 0.8125 | ValAcc: 0.7059 | ValLoss: 0.4355 | LR: 1.00e-03
+2025-06-27 03:51:55,608 - INFO - [Epoch 50] TrainLoss: 0.5726 | SupLoss: 0.5667 | ConsisLoss: 0.0060 | TrainAcc: 0.7500 | ValAcc: 0.7059 | ValLoss: 0.4552 | LR: 1.00e-03
+2025-06-27 03:51:56,089 - INFO - Best teacher model saved to F:\zyp\Thesis source code\mmaction2\projects\seasonal_pseudo_change\work_dirs\swin_tiny_raw_20250627_015434\teacher_final.pth
+2025-06-27 03:51:56,089 - INFO - Experiment finished.

@@ -1,2 +1,0 @@
-Epoch	TrainLoss	SupLoss	ConsisLoss	TrainAcc	ValAcc	ValLoss	LR
-1	0.7057	-0.0002	0.7059	0.0000	0.0000	7.1486	1.00e-03
