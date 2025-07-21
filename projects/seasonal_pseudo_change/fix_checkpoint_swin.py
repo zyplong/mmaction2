@@ -377,3 +377,6 @@ if __name__ == "__main__":
     cfg = load_cfg_py(sys.argv[1])
     params = extract_params(cfg)
     train_mean_teacher(params)
+
+
+    #jhksadjklasd
