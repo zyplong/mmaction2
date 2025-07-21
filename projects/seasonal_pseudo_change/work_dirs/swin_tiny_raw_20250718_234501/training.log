@@ -1,0 +1,55 @@
+2025-07-18 23:45:01,210 - INFO - Starting training, params:
+{'config': 'F:\\\\zyp\\Thesis source code\\\\mmaction2\\\\projects\\seasonal_pseudo_change\\\\configs\\\\downstream_videoswin\\\\swin_tiny_raw.py', 'checkpoint': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth', 'train_csv': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/train.csv', 'val_csv': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/val.csv', 'unlabeled_csv': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/unlabeled.txt', 'rawframes_dir': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes', 'ddpm_npy_dir': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/results/logits', 'clip_len': 20, 'bs': 4, 'lr': 0.001, 'lambda_u': 1.0, 'rampup_epochs': 5, 'epochs': 50, 'save_dir': 'F:\\zyp\\Thesis source code\\mmaction2\\projects\\seasonal_pseudo_change\\work_dirs\\swin_tiny_raw_20250718_234501'}
+2025-07-18 23:58:42,106 - INFO - [Epoch  1] sup=0.8648 | cons=0.5072 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.6754 | time=11m30s
+2025-07-18 23:58:42,275 - INFO - *** Saved best at epoch 1, val_acc=0.7059 ***
+2025-07-19 00:11:50,823 - INFO - [Epoch  2] sup=0.8498 | cons=0.3163 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.3343 | time=11m10s
+2025-07-19 00:25:10,138 - INFO - [Epoch  3] sup=0.8654 | cons=0.3430 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.0254 | time=10m58s
+2025-07-19 00:38:24,714 - INFO - [Epoch  4] sup=1.0327 | cons=0.3546 | train_acc=0.7031 | val_acc=0.7647 | val_loss=0.6767 | time=10m51s
+2025-07-19 00:38:24,879 - INFO - *** Saved best at epoch 4, val_acc=0.7647 ***
+2025-07-19 00:51:50,118 - INFO - [Epoch  5] sup=1.6630 | cons=0.9746 | train_acc=0.7500 | val_acc=0.7059 | val_loss=2.6122 | time=10m57s
+2025-07-19 01:05:04,421 - INFO - [Epoch  6] sup=1.3166 | cons=0.3505 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.3182 | time=10m54s
+2025-07-19 01:18:18,804 - INFO - [Epoch  7] sup=1.3674 | cons=0.4822 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.3429 | time=10m56s
+2025-07-19 01:31:29,149 - INFO - [Epoch  8] sup=0.8935 | cons=0.3765 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.6908 | time=10m55s
+2025-07-19 01:44:39,937 - INFO - [Epoch  9] sup=0.9334 | cons=0.5778 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.7429 | time=10m54s
+2025-07-19 01:57:51,718 - INFO - [Epoch 10] sup=1.8554 | cons=0.9621 | train_acc=0.7500 | val_acc=0.7059 | val_loss=3.1367 | time=10m56s
+2025-07-19 02:11:30,148 - INFO - [Epoch 11] sup=1.6090 | cons=0.4844 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.7459 | time=11m7s
+2025-07-19 02:24:54,237 - INFO - [Epoch 12] sup=1.2247 | cons=0.5394 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.3762 | time=10m59s
+2025-07-19 02:38:11,763 - INFO - [Epoch 13] sup=1.3404 | cons=0.5304 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.2793 | time=10m44s
+2025-07-19 02:51:24,518 - INFO - [Epoch 14] sup=1.8295 | cons=0.5904 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.6210 | time=10m55s
+2025-07-19 03:04:48,314 - INFO - [Epoch 15] sup=2.1992 | cons=0.3562 | train_acc=0.7500 | val_acc=0.7059 | val_loss=3.2496 | time=10m48s
+2025-07-19 03:18:02,973 - INFO - [Epoch 16] sup=1.8770 | cons=0.4132 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.8342 | time=11m1s
+2025-07-19 03:31:34,520 - INFO - [Epoch 17] sup=1.2622 | cons=0.6530 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.3709 | time=11m3s
+2025-07-19 03:45:03,131 - INFO - [Epoch 18] sup=1.1515 | cons=0.4239 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.3934 | time=11m5s
+2025-07-19 03:58:20,624 - INFO - [Epoch 19] sup=1.7035 | cons=0.4161 | train_acc=0.7500 | val_acc=0.7059 | val_loss=2.0936 | time=10m57s
+2025-07-19 04:11:35,327 - INFO - [Epoch 20] sup=1.6411 | cons=0.4051 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.6165 | time=10m55s
+2025-07-19 04:24:53,322 - INFO - [Epoch 21] sup=2.0714 | cons=0.5062 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.9680 | time=10m48s
+2025-07-19 04:37:45,781 - INFO - [Epoch 22] sup=1.3628 | cons=0.4993 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.0113 | time=10m45s
+2025-07-19 04:50:42,207 - INFO - [Epoch 23] sup=1.4805 | cons=0.4296 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.5720 | time=10m46s
+2025-07-19 05:03:47,576 - INFO - [Epoch 24] sup=0.9571 | cons=0.3809 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.3825 | time=10m51s
+2025-07-19 05:16:45,219 - INFO - [Epoch 25] sup=0.9286 | cons=0.7350 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.6072 | time=10m42s
+2025-07-19 05:29:41,342 - INFO - [Epoch 26] sup=1.2980 | cons=0.3181 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.2374 | time=10m44s
+2025-07-19 05:42:57,363 - INFO - [Epoch 27] sup=0.9178 | cons=0.4178 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.7367 | time=10m44s
+2025-07-19 05:55:45,350 - INFO - [Epoch 28] sup=0.8860 | cons=0.3015 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.7186 | time=10m53s
+2025-07-19 06:09:04,900 - INFO - [Epoch 29] sup=0.7444 | cons=0.3009 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.1300 | time=10m51s
+2025-07-19 06:22:11,806 - INFO - [Epoch 30] sup=0.9195 | cons=0.3969 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.6086 | time=10m50s
+2025-07-19 06:35:32,097 - INFO - [Epoch 31] sup=1.1227 | cons=0.9354 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.9549 | time=10m58s
+2025-07-19 06:48:45,317 - INFO - [Epoch 32] sup=1.4199 | cons=0.3211 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.2513 | time=10m53s
+2025-07-19 07:01:59,893 - INFO - [Epoch 33] sup=0.7248 | cons=0.3525 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.5278 | time=10m46s
+2025-07-19 07:15:21,559 - INFO - [Epoch 34] sup=0.9124 | cons=0.5065 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.7912 | time=10m46s
+2025-07-19 07:28:34,412 - INFO - [Epoch 35] sup=1.4422 | cons=0.6406 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.0546 | time=10m50s
+2025-07-19 07:42:03,833 - INFO - [Epoch 36] sup=1.5844 | cons=0.5243 | train_acc=0.7500 | val_acc=0.7059 | val_loss=2.7748 | time=10m58s
+2025-07-19 07:55:26,993 - INFO - [Epoch 37] sup=1.5561 | cons=0.6604 | train_acc=0.7500 | val_acc=0.7059 | val_loss=3.4740 | time=11m2s
+2025-07-19 08:08:58,161 - INFO - [Epoch 38] sup=1.9456 | cons=0.4894 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.7690 | time=11m3s
+2025-07-19 08:22:03,790 - INFO - [Epoch 39] sup=1.3855 | cons=0.4320 | train_acc=0.7812 | val_acc=0.7059 | val_loss=0.9145 | time=10m59s
+2025-07-19 08:35:13,648 - INFO - [Epoch 40] sup=1.0887 | cons=0.3246 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.7271 | time=10m54s
+2025-07-19 08:48:22,065 - INFO - [Epoch 41] sup=0.8413 | cons=0.3603 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.5092 | time=10m49s
+2025-07-19 09:01:40,281 - INFO - [Epoch 42] sup=0.8257 | cons=0.4343 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.1705 | time=10m53s
+2025-07-19 09:14:53,698 - INFO - [Epoch 43] sup=0.7150 | cons=0.6442 | train_acc=0.7500 | val_acc=0.7059 | val_loss=0.8201 | time=10m50s
+2025-07-19 09:27:59,403 - INFO - [Epoch 44] sup=1.6262 | cons=0.6632 | train_acc=0.7500 | val_acc=0.7059 | val_loss=2.6159 | time=10m57s
+2025-07-19 09:41:02,488 - INFO - [Epoch 45] sup=0.8602 | cons=0.6176 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.1170 | time=10m55s
+2025-07-19 09:54:35,044 - INFO - [Epoch 46] sup=1.0645 | cons=0.8465 | train_acc=0.7500 | val_acc=0.7059 | val_loss=3.6205 | time=11m0s
+2025-07-19 10:08:06,348 - INFO - [Epoch 47] sup=2.1590 | cons=0.5236 | train_acc=0.7500 | val_acc=0.7059 | val_loss=3.3311 | time=11m10s
+2025-07-19 10:21:25,779 - INFO - [Epoch 48] sup=1.7150 | cons=0.3173 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.1200 | time=11m5s
+2025-07-19 10:34:51,881 - INFO - [Epoch 49] sup=1.3817 | cons=0.4271 | train_acc=0.8438 | val_acc=0.7647 | val_loss=0.4025 | time=10m54s
+2025-07-19 10:48:00,978 - INFO - [Epoch 50] sup=0.7923 | cons=0.6017 | train_acc=0.7500 | val_acc=0.7059 | val_loss=1.4555 | time=10m51s
+2025-07-19 10:48:01,146 - INFO - Training finished.

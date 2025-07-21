@@ -1,0 +1,55 @@
+2025-07-20 16:01:15,326 - INFO - Params:
+{'config': 'F:\\zyp\\Thesis source code\\mmaction2\\projects\\seasonal_pseudo_change\\configs/downstream_videoswin/swin_tiny_raw.py', 'checkpoint': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/pretrained/videoswin/swin_tiny_patch244_window877_kinetics400_1k_state_dict.pth', 'train_csv': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/train.csv', 'val_csv': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/val.csv', 'unlabeled_txt': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/splits/unlabeled.txt', 'rawframes_dir': 'F:/zyp/Thesis source code/mmaction2/projects/seasonal_pseudo_change/datasets/rawframes', 'clip_len': 20, 'bs': 4, 'lr': 0.001, 'epochs': 50, 'save_dir': 'F:\\zyp\\Thesis source code\\mmaction2\\projects\\seasonal_pseudo_change\\work_dirs\\swin_tiny_raw_20250720_160115', 'lambda_u': 2.0, 'rampup_epochs': 5, 'tau_start': 0.95, 'tau_end': 0.85, 'tau_warm': 3, 'T_sharp': 0.5, 'ema_decay_base': 0.99, 'ema_decay_late': 0.995, 'ema_switch_epoch': 10, 'num_classes': 2}
+2025-07-20 16:01:16,152 - INFO - Dataset sizes L=64, U=769, V=17
+2025-07-20 16:13:15,410 - INFO - [Epoch 1] sup=1.9920 unsup=0.0000 mask=0.000 train_acc=0.0000 val_acc=0.0000 val_loss=7.4339 τ=0.95 λ_u=0.40 ema=0.990
+2025-07-20 16:23:34,643 - INFO - [Epoch 2] sup=1.4299 unsup=0.0000 mask=0.000 train_acc=0.0000 val_acc=0.0000 val_loss=6.4132 τ=0.95 λ_u=0.80 ema=0.990
+2025-07-20 16:34:02,850 - INFO - [Epoch 3] sup=0.7938 unsup=0.0000 mask=0.000 train_acc=0.7500 val_acc=0.7059 val_loss=3.3298 τ=0.95 λ_u=1.20 ema=0.990
+2025-07-20 16:34:03,059 - INFO - *** New best teacher (ep3, val_acc=0.7059) ***
+2025-07-20 16:46:40,208 - INFO - [Epoch 4] sup=0.7479 unsup=0.0354 mask=0.688 train_acc=0.7500 val_acc=0.7059 val_loss=0.9709 τ=0.95 λ_u=1.60 ema=0.990
+2025-07-20 17:00:31,190 - INFO - [Epoch 5] sup=1.1714 unsup=0.0830 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.0225 τ=0.95 λ_u=2.00 ema=0.990
+2025-07-20 17:14:08,524 - INFO - [Epoch 6] sup=0.8031 unsup=0.1082 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.0418 τ=0.94 λ_u=2.00 ema=0.990
+2025-07-20 17:27:28,571 - INFO - [Epoch 7] sup=0.7584 unsup=0.1235 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9882 τ=0.94 λ_u=2.00 ema=0.990
+2025-07-20 17:41:06,764 - INFO - [Epoch 8] sup=0.7420 unsup=0.0736 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9657 τ=0.94 λ_u=2.00 ema=0.990
+2025-07-20 17:54:09,248 - INFO - [Epoch 9] sup=0.7500 unsup=0.0991 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9421 τ=0.94 λ_u=2.00 ema=0.990
+2025-07-20 18:07:39,120 - INFO - [Epoch 10] sup=1.2845 unsup=0.0634 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9710 τ=0.94 λ_u=2.00 ema=0.995
+2025-07-20 18:21:16,605 - INFO - [Epoch 11] sup=0.9725 unsup=0.0882 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9799 τ=0.93 λ_u=2.00 ema=0.995
+2025-07-20 18:34:42,344 - INFO - [Epoch 12] sup=0.6894 unsup=0.0875 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9592 τ=0.93 λ_u=2.00 ema=0.995
+2025-07-20 18:48:27,259 - INFO - [Epoch 13] sup=0.6606 unsup=0.0563 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9546 τ=0.93 λ_u=2.00 ema=0.995
+2025-07-20 19:02:06,026 - INFO - [Epoch 14] sup=0.4704 unsup=0.0475 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9433 τ=0.93 λ_u=2.00 ema=0.995
+2025-07-20 19:15:34,091 - INFO - [Epoch 15] sup=0.3680 unsup=0.0608 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9524 τ=0.92 λ_u=2.00 ema=0.995
+2025-07-20 19:28:46,452 - INFO - [Epoch 16] sup=0.5468 unsup=0.0359 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9339 τ=0.92 λ_u=2.00 ema=0.995
+2025-07-20 19:42:21,397 - INFO - [Epoch 17] sup=0.4954 unsup=0.0234 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9071 τ=0.92 λ_u=2.00 ema=0.995
+2025-07-20 19:56:01,772 - INFO - [Epoch 18] sup=0.6147 unsup=0.0394 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.8859 τ=0.92 λ_u=2.00 ema=0.995
+2025-07-20 20:09:43,147 - INFO - [Epoch 19] sup=0.6800 unsup=0.0294 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.8674 τ=0.92 λ_u=2.00 ema=0.995
+2025-07-20 20:23:05,959 - INFO - [Epoch 20] sup=0.4704 unsup=0.0483 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.8255 τ=0.91 λ_u=2.00 ema=0.995
+2025-07-20 20:36:33,194 - INFO - [Epoch 21] sup=0.4448 unsup=0.0328 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.7801 τ=0.91 λ_u=2.00 ema=0.995
+2025-07-20 20:50:09,523 - INFO - [Epoch 22] sup=0.6229 unsup=0.0344 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.7491 τ=0.91 λ_u=2.00 ema=0.995
+2025-07-20 21:03:44,729 - INFO - [Epoch 23] sup=0.5920 unsup=0.0208 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.7150 τ=0.91 λ_u=2.00 ema=0.995
+2025-07-20 21:17:29,392 - INFO - [Epoch 24] sup=0.9272 unsup=0.1587 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.8027 τ=0.91 λ_u=2.00 ema=0.995
+2025-07-20 21:31:32,757 - INFO - [Epoch 25] sup=0.9178 unsup=0.0934 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.0613 τ=0.90 λ_u=2.00 ema=0.995
+2025-07-20 21:44:51,261 - INFO - [Epoch 26] sup=0.7122 unsup=0.0987 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.1543 τ=0.90 λ_u=2.00 ema=0.995
+2025-07-20 21:58:27,065 - INFO - [Epoch 27] sup=0.8541 unsup=0.0854 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.1689 τ=0.90 λ_u=2.00 ema=0.995
+2025-07-20 22:11:51,822 - INFO - [Epoch 28] sup=0.7861 unsup=0.0947 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.1502 τ=0.90 λ_u=2.00 ema=0.995
+2025-07-20 22:25:46,608 - INFO - [Epoch 29] sup=0.6978 unsup=0.0953 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.1201 τ=0.89 λ_u=2.00 ema=0.995
+2025-07-20 22:39:39,454 - INFO - [Epoch 30] sup=0.8301 unsup=0.0957 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.0966 τ=0.89 λ_u=2.00 ema=0.995
+2025-07-20 22:53:33,138 - INFO - [Epoch 31] sup=0.8129 unsup=0.0777 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.0738 τ=0.89 λ_u=2.00 ema=0.995
+2025-07-20 23:07:15,020 - INFO - [Epoch 32] sup=0.7368 unsup=0.0780 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.0501 τ=0.89 λ_u=2.00 ema=0.995
+2025-07-20 23:20:58,038 - INFO - [Epoch 33] sup=0.7087 unsup=0.0900 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.0260 τ=0.89 λ_u=2.00 ema=0.995
+2025-07-20 23:34:13,546 - INFO - [Epoch 34] sup=0.7557 unsup=0.0825 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=1.0136 τ=0.88 λ_u=2.00 ema=0.995
+2025-07-20 23:47:42,047 - INFO - [Epoch 35] sup=0.8229 unsup=0.0890 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9980 τ=0.88 λ_u=2.00 ema=0.995
+2025-07-21 00:01:16,539 - INFO - [Epoch 36] sup=0.8370 unsup=0.0519 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9871 τ=0.88 λ_u=2.00 ema=0.995
+2025-07-21 00:15:12,412 - INFO - [Epoch 37] sup=0.8029 unsup=0.0946 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9762 τ=0.88 λ_u=2.00 ema=0.995
+2025-07-21 00:28:53,639 - INFO - [Epoch 38] sup=0.7406 unsup=0.0943 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9636 τ=0.88 λ_u=2.00 ema=0.995
+2025-07-21 00:42:25,253 - INFO - [Epoch 39] sup=0.7055 unsup=0.1060 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9455 τ=0.87 λ_u=2.00 ema=0.995
+2025-07-21 00:55:43,542 - INFO - [Epoch 40] sup=0.8013 unsup=0.0604 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9420 τ=0.87 λ_u=2.00 ema=0.995
+2025-07-21 01:08:54,558 - INFO - [Epoch 41] sup=0.7358 unsup=0.0861 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9300 τ=0.87 λ_u=2.00 ema=0.995
+2025-07-21 01:22:39,688 - INFO - [Epoch 42] sup=0.7041 unsup=0.0837 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9178 τ=0.87 λ_u=2.00 ema=0.995
+2025-07-21 01:36:22,088 - INFO - [Epoch 43] sup=0.7074 unsup=0.0981 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9078 τ=0.86 λ_u=2.00 ema=0.995
+2025-07-21 01:49:51,796 - INFO - [Epoch 44] sup=0.9192 unsup=0.0318 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9241 τ=0.86 λ_u=2.00 ema=0.995
+2025-07-21 02:03:21,608 - INFO - [Epoch 45] sup=1.0068 unsup=0.1105 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9385 τ=0.86 λ_u=2.00 ema=0.995
+2025-07-21 02:17:06,793 - INFO - [Epoch 46] sup=0.7226 unsup=0.1081 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9216 τ=0.86 λ_u=2.00 ema=0.995
+2025-07-21 02:30:39,479 - INFO - [Epoch 47] sup=0.8010 unsup=0.0816 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9184 τ=0.86 λ_u=2.00 ema=0.995
+2025-07-21 02:44:23,084 - INFO - [Epoch 48] sup=0.7815 unsup=0.0860 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9088 τ=0.85 λ_u=2.00 ema=0.995
+2025-07-21 02:58:19,102 - INFO - [Epoch 49] sup=0.7871 unsup=0.0573 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9121 τ=0.85 λ_u=2.00 ema=0.995
+2025-07-21 03:12:11,707 - INFO - [Epoch 50] sup=0.8065 unsup=0.0776 mask=1.000 train_acc=0.7500 val_acc=0.7059 val_loss=0.9141 τ=0.85 λ_u=2.00 ema=0.995
+2025-07-21 03:12:12,789 - INFO - Training finished. Best val_acc = 0.7059
