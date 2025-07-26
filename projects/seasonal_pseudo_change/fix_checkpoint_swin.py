@@ -225,6 +225,38 @@ def train_mean_teacher(params):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     student = init_recognizer(params['config'], params['checkpoint'], device=device)
     teacher = init_recognizer(params['config'], params['checkpoint'], device=device)
+
+    def adapt_patch_embed_to_4chan(model):
+        import torch
+        from torch import nn
+        # 拿到原来的 proj（Conv3d）
+        proj = model.backbone.patch_embed.proj
+        w = proj.weight.data  # [out_ch, in_ch, kt, kh, kw]
+        # 只对原来 in_ch==3 的情况做拓展
+        if w.shape[1] == 3:
+            # 新建一个 4 通道的 Conv3d
+            new_conv = nn.Conv3d(
+                in_channels=4,
+                out_channels=proj.out_channels,
+                kernel_size=proj.kernel_size,
+                stride=proj.stride,
+                padding=proj.padding,
+                bias=(proj.bias is not None)
+            ).to(w.device)
+            # 把原来 RGB 三通道的权重 copy 过去
+            new_conv.weight.data[:, :3] = w
+            # 用 RGB 通道的均值来初始化第 4 通道
+            new_conv.weight.data[:, 3:4] = w.mean(dim=1, keepdim=True)
+            # 如果有 bias，也要把它 copy 过去
+            if proj.bias is not None:
+                new_conv.bias.data.copy_(proj.bias.data)
+            # 用新 conv 替换掉旧的 patch_embed.proj
+            model.backbone.patch_embed.proj = new_conv
+
+    # 对 student 和 teacher 都做一次
+    adapt_patch_embed_to_4chan(student)
+    adapt_patch_embed_to_4chan(teacher)
+
     teacher.eval()
     for p in teacher.parameters(): p.requires_grad=False
 
